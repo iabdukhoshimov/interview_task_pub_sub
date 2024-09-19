@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  pubsub-emulator:
+    image: dipjyotimetia/pubsub-emulator:latest
+    environment:
+      - PUBSUB_PROJECT=fleet-muse-436011-v4
+      - PUBSUB_TOPIC=topic_1
+      - PUBSUB_SUBSCRIPTION=sub_1,sub_2
+      - PUBSUB_PORT=8085
+    ports:
+      - "8085:8085"
