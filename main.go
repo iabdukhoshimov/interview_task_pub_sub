@@ -14,7 +14,7 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(context.Background()) // context with
 	defer cancel()
 
 	os.Setenv("PUBSUB_EMULATOR_HOST", cfg.GcpPubsub.Endpiont)

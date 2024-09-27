@@ -9,14 +9,14 @@ import (
 
 func (c *client) GetOrCreateTopic(ctx context.Context, topicID string) (*pubsub.Topic, error) {
 	topic := c.client.Topic(topicID)
-	ok, err := topic.Exists(ctx)
-	if err != nil {
-		log.Fatalf("Failed to check if topic exists: %v", err)
+	ok, errTopic := topic.Exists(ctx)
+	if errTopic != nil {
+		log.Fatalf("Failed to check if topic exists: %v", errTopic)
 	}
 	if !ok {
-		createdTopic, err := c.client.CreateTopic(ctx, topicID)
-		if err != nil {
-			log.Fatalf("Failed to create topic: %v", err)
+		createdTopic, errTopicCreate := c.client.CreateTopic(ctx, topicID)
+		if errTopicCreate != nil {
+			log.Fatalf("Failed to create topic: %v", errTopicCreate)
 		}
 
 		log.Printf("Topic %s created.\n", topicID)

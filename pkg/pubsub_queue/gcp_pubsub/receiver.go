@@ -15,9 +15,9 @@ func (c *client) GetOrCreateSubscription(
 	subName string,
 ) (*pubsub.Subscription, error) {
 	sub := c.client.Subscription(subName)
-	ok, ErrSubExists := sub.Exists(ctx)
-	if ErrSubExists != nil {
-		log.Fatalf("Failed to check if subscription exists: %v", ErrSubExists)
+	ok, errSubExists := sub.Exists(ctx)
+	if errSubExists != nil {
+		log.Fatalf("Failed to check if subscription exists: %v", errSubExists)
 	}
 	if !ok {
 		createdSub, errCreateSub := c.client.
@@ -39,7 +39,7 @@ func (c *client) GetOrCreateSubscription(
 }
 
 func (c *client) ConsumeMessages(ctx context.Context, sub *pubsub.Subscription, handler func([]byte) error) error {
-	errReceive := sub.Receive(ctx, func(ctx context.Context, msg *pubsub.Message) {
+	errReceive := sub.Receive(ctx, func(_ context.Context, msg *pubsub.Message) {
 		var m models.Message
 		if errUnmarshal := json.Unmarshal(msg.Data, &m); errUnmarshal != nil {
 			log.Printf("Failed to unmarshal message data: %v", errUnmarshal)

@@ -25,7 +25,7 @@ type client struct {
 
 /*
 New creates a new instance of the GCP PubSub client
-and it receives everythig through the environment variables
+and it receives everythig through the environment variables .
 */
 func New(ctx context.Context) pubsubqueue.Client {
 	var (
